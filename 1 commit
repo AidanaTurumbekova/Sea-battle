@@ -1,0 +1,3 @@
+print("Welcome to Battleship!")
+player_name = input("Enter your name: ")
+print(f"Hello, {player_name}! Let's start!")
