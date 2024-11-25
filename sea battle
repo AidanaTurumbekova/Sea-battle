@@ -7,14 +7,13 @@ print(f"Hello, {player_name}! Let's start!")
 ROWS, COLS = 7, 7
 battlefield = [["~"] * COLS for _ in range(ROWS)]
 
-def place_ship():
+def place_ship(count=5):
      for _ in range(count):
         x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
         while battlefield[x][y] == "S":
             x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
         battlefield[x][y] = "S"
 
-place_ship(5)
 try:
     x, y = map(int, input("Enter your shot as two numbers (row and column) separated by a space: ").split())
     
@@ -33,7 +32,8 @@ except ValueError:
     print("Invalid input. Please enter two numbers separated by a space.")
 
 for row in battlefield:
-    print(" | ".join(["X" if cell == "X" else "M" if cell == "M" else "~" for cell in row]))
+    print(" | ".join(row))
+
 
 
 
