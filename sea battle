@@ -20,12 +20,13 @@ def valid_placement(x, y, size, orientation):
             if battlefield[x][y + i] != "~":
                 return False
 
-if x > 0 and battlefield[x - 1][y + i] == "S": return False
-            if x < ROWS - 1 and battlefield[x + 1][y + i] == "S": return False
-            if y + i > 0 and battlefield[x][y + i - 1] == "S": return False
-            if y + i < COLS - 1 and battlefield[x][y + i + 1] == "S": return False
-        return True
-    elif orientation == "V":  # Vertical
+          if x + size > ROWS: return False
+for i in range(size):
+    if battlefield[x + i][y] != "~":  # Checks if the spot is empty
+        return False
+    if y > 0 and battlefield[x + i][y - 1] == "S": return False  # Checks left of the ship
+    if y < COLS - 1 and battlefield[x + i][y + 1] == "S": return False
+    elif orientation == "V": 
         if x + size > ROWS: return False
         for i in range(size):
             if battlefield[x + i][y] != "~":
@@ -54,9 +55,22 @@ if x > 0 and battlefield[x - 1][y + i] == "S": return False
                         battlefield[x + i][y] = "S"
                 placed = True
                 ships.append(((x, y), orientation, size))
+def play_game():
+    global shots_taken
+    print("Welcome to Battleship!")
+    player_name = input("Enter your name: ")
+    print(f"Hello, {player_name}! Let's start!")
+    place_ships()
 
-print("Invalid coordinates. Please enter numbers between 0 and 6.")
- print("Invalid input. Please enter two numbers separated by a space.")
+    while not all_ships_sunk():
+        display_battlefield()
+
+        try:
+            shot = input("Enter your shot (e.g., B3): ").upper()
+            x, y = parse_coordinates(shot)
+            if x == -1 or y < 0 or y >= ROWS:
+                print("Invalid coordinates! Please try again.")
+                continue
 
 for row in battlefield:
     print(" | ".join(row))
