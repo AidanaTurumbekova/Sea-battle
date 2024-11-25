@@ -20,9 +20,23 @@ def valid_placement(x, y, size, orientation):
             if battlefield[x][y + i] != "~":
                 return False
 
-try:
-    x, y = map(int, input("Enter your shot as two numbers (row and column) separated by a space: ").split())
-    
+if x > 0 and battlefield[x - 1][y + i] == "S": return False
+            if x < ROWS - 1 and battlefield[x + 1][y + i] == "S": return False
+            if y + i > 0 and battlefield[x][y + i - 1] == "S": return False
+            if y + i < COLS - 1 and battlefield[x][y + i + 1] == "S": return False
+        return True
+    elif orientation == "V":  # Vertical
+        if x + size > ROWS: return False
+        for i in range(size):
+            if battlefield[x + i][y] != "~":
+                return False
+ if y > 0 and battlefield[x + i][y - 1] == "S": return False
+            if y < COLS - 1 and battlefield[x + i][y + 1] == "S": return False
+            if x + i > 0 and battlefield[x + i - 1][y] == "S": return False
+            if x + i < ROWS - 1 and battlefield[x + i + 1][y] == "S": return False
+        return True
+
+
     if 0 <= x < ROWS and 0 <= y < COLS: 
         if battlefield[x][y] == "S":
             print("Hit!")
