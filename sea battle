@@ -1,18 +1,24 @@
 import random
+import os 
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 print("Welcome to Battleship!")
 player_name = input("Enter your name: ")
 print(f"Hello, {player_name}! Let's start!")
 
 ROWS, COLS = 7, 7
+ship_sizes = [3, 2, 2, 1, 1, 1, 1]
 battlefield = [["~"] * COLS for _ in range(ROWS)]
+shots_taken = 0
 
-def place_ship(count=5):
-     for _ in range(count):
-        x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
-        while battlefield[x][y] == "S":
-            x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
-        battlefield[x][y] = "S"
+def valid_placement(x, y, size, orientation):
+    if orientation == "H":  # Horizontal
+        if y + size > COLS: return False
+        for i in range(size):
+            if battlefield[x][y + i] != "~":
+                return False
 
 try:
     x, y = map(int, input("Enter your shot as two numbers (row and column) separated by a space: ").split())
