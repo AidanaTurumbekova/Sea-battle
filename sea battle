@@ -37,19 +37,26 @@ if x > 0 and battlefield[x - 1][y + i] == "S": return False
         return True
 
 
-    if 0 <= x < ROWS and 0 <= y < COLS: 
-        if battlefield[x][y] == "S":
-            print("Hit!")
-            battlefield[x][y] = "X"
-        elif battlefield[x][y] == "~":
-            print("Miss.")
-            battlefield[x][y] = "M"
-        else:
-            print("You already shot here!")
-    else:
-        print("Invalid coordinates. Please enter numbers between 0 and 6.")
-except ValueError:
-    print("Invalid input. Please enter two numbers separated by a space.")
+   def place_ships():
+    ships = []
+    for size in ship_sizes:
+        placed = False
+        while not placed:
+            orientation = random.choice(["H", "V"])
+            x = random.randint(0, ROWS - 1)
+            y = random.randint(0, COLS - 1)
+            if valid_placement(x, y, size, orientation):
+                if orientation == "H":
+                    for i in range(size):
+                        battlefield[x][y + i] = "S"
+                elif orientation == "V":
+                    for i in range(size):
+                        battlefield[x + i][y] = "S"
+                placed = True
+                ships.append(((x, y), orientation, size))
+
+print("Invalid coordinates. Please enter numbers between 0 and 6.")
+ print("Invalid input. Please enter two numbers separated by a space.")
 
 for row in battlefield:
     print(" | ".join(row))
