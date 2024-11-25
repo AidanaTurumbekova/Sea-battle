@@ -2,7 +2,9 @@ print("Welcome to Battleship!")
 player_name = input("Enter your name: ")
 print(f"Hello, {player_name}! Let's start!")
 
-battlefield = [["~"] * 7 for _ in range(7)]
+ROWS, COLS = 7, 7
+battlefield = [["~"] * COLS for _ in range(ROWS)]
 
 for row in battlefield:
-    print(" ".join(row))
+    print(" | ".join(row))
+
