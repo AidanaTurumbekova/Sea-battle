@@ -1,3 +1,5 @@
+import random
+
 print("Welcome to Battleship!")
 player_name = input("Enter your name: ")
 print(f"Hello, {player_name}! Let's start!")
@@ -5,6 +7,25 @@ print(f"Hello, {player_name}! Let's start!")
 ROWS, COLS = 7, 7
 battlefield = [["~"] * COLS for _ in range(ROWS)]
 
+def place_ship():
+     for _ in range(count):
+        x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
+        while battlefield[x][y] == "S":
+    x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
+    battlefield[x][y] = "S"
+
+place_ship(5)
+
+x, y = map(int, input("Enter your shot (row and column): ").split())
+if battlefield[x][y] == "S":
+    print("Hit!")
+    battlefield[x][y] = "X"
+else:
+    print("Miss.")
+    battlefield[x][y] = "M"
+
 for row in battlefield:
     print(" | ".join(row))
+
+
 
