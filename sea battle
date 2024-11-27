@@ -3,22 +3,30 @@ import os
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
+def create_empty_field(size):
+    return [["~"] * size for _ in range(size)]
 
-print("Welcome to Battleship!")
-player_name = input("Enter your name: ")
-print(f"Hello, {player_name}! Let's start!")
+# Display the player's field
+def display_field(field):
+    print("  " + " ".join(str(i + 1) for i in range(len(field[0]))))  # Column headers
+    for r, row in enumerate(field):
+        print(chr(65 + r) + " " + " ".join(row))  # Row headers (A-G)
 
-ROWS, COLS = 7, 7
-ship_sizes = [3, 2, 2, 1, 1, 1, 1]
-battlefield = [["~"] * COLS for _ in range(ROWS)]
-shots_taken = 0
-
-def valid_placement(x, y, size, orientation):
-    if orientation == "H":  # Horizontal
-        if y + size > COLS: return False
-        for i in range(size):
-            if battlefield[x][y + i] != "~":
-                return False
+# Place ships randomly on the field
+def place_ships(field, ship_sizes):
+    size = len(field)
+    for ship_size in ship_sizes:
+        while True:
+            x = random.randint(0, size - 1)
+            y = random.randint(0, size - 1)
+            orientation = random.choice(["H", "V"])  # Horizontal or Vertical
+            if can_place_ship(field, x, y, ship_size, orientation):
+                for i in range(ship_size):
+                    if orientation == "H":
+                        field[x][y + i] = "S"
+                    else:
+                        field[x + i][y] = "S"
+                break
 
           if x + size > ROWS: return False
 for i in range(size):
