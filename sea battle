@@ -45,45 +45,33 @@ def parse_coordinates(shot):
     y = int(shot[1:]) - 1
     return x, y
 
-
-   def place_ships():
-    ships = []
-    for size in ship_sizes:
-        placed = False
-        while not placed:
-            orientation = random.choice(["H", "V"])
-            x = random.randint(0, ROWS - 1)
-            y = random.randint(0, COLS - 1)
-            if valid_placement(x, y, size, orientation):
-                if orientation == "H":
-                    for i in range(size):
-                        battlefield[x][y + i] = "S"
-                elif orientation == "V":
-                    for i in range(size):
-                        battlefield[x + i][y] = "S"
-                placed = True
-                ships.append(((x, y), orientation, size))
+# Main game loop
 def play_game():
-    global shots_taken
+    clear_screen()
     print("Welcome to Battleship!")
     player_name = input("Enter your name: ")
-    print(f"Hello, {player_name}! Let's start!")
-    place_ships()
 
-    while not all_ships_sunk():
-        display_battlefield()
+    # Create fields
+    size = 7
+    player_field = create_empty_field(size)  # What the player sees
+    hidden_field = create_empty_field(size)  # Where the ships are placed
 
-        try:
-            shot = input("Enter your shot (e.g., B3): ").upper()
-            x, y = parse_coordinates(shot)
-            if x == -1 or y < 0 or y >= ROWS:
-                print("Invalid coordinates! Please try again.")
-                continue
+    # Place ships
+    ship_sizes = [3, 2, 2, 1, 1, 1, 1]
+    place_ships(hidden_field, ship_sizes)
 
-for row in battlefield:
-    print(" | ".join(row))
+    shots = 0
+    hits = 0
+    total_ship_parts = sum(ship_sizes)
 
+    while hits < total_ship_parts:
+        clear_screen()
+        print(f"{player_name}, here's your field:")
+        display_field(player_field)
 
+        # Get player's shot
+        shot = input("Enter your shot (e.g., A1, B3): ").upper()
+        x, y = parse_coordinates(shot) 
 
 
 
