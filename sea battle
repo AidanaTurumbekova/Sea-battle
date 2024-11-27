@@ -73,5 +73,15 @@ def play_game():
         shot = input("Enter your shot (e.g., A1, B3): ").upper()
         x, y = parse_coordinates(shot) 
 
+ # Validate coordinates
+        if x < 0 or x >= size or y < 0 or y >= size:
+            print("Invalid coordinates! Try again.")
+            input("Press Enter to continue...")
+            continue
+        if player_field[x][y] in ["M", "H"]:
+            print("You already shot here! Try again.")
+            input("Press Enter to continue...")
+            continue
+
 
 
