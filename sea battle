@@ -28,22 +28,22 @@ def place_ships(field, ship_sizes):
                         field[x + i][y] = "S"
                 break
 
-          if x + size > ROWS: return False
-for i in range(size):
-    if battlefield[x + i][y] != "~":  # Checks if the spot is empty
-        return False
-    if y > 0 and battlefield[x + i][y - 1] == "S": return False  # Checks left of the ship
-    if y < COLS - 1 and battlefield[x + i][y + 1] == "S": return False
-    elif orientation == "V": 
-        if x + size > ROWS: return False
-        for i in range(size):
-            if battlefield[x + i][y] != "~":
-                return False
- if y > 0 and battlefield[x + i][y - 1] == "S": return False
-            if y < COLS - 1 and battlefield[x + i][y + 1] == "S": return False
-            if x + i > 0 and battlefield[x + i - 1][y] == "S": return False
-            if x + i < ROWS - 1 and battlefield[x + i + 1][y] == "S": return False
-        return True
+# Check if a ship can be placed at a location
+def can_place_ship(field, x, y, ship_size, orientation):
+    size = len(field)
+    for i in range(ship_size):
+        xi, yi = (x, y + i) if orientation == "H" else (x + i, y)
+        if xi >= size or yi >= size or field[xi][yi] != "~":
+            return False
+    return True
+
+# Parse coordinates like "B3" into indices
+def parse_coordinates(shot):
+    if len(shot) < 2 or not shot[1:].isdigit():
+        return -1, -1
+    x = ord(shot[0].upper()) - 65
+    y = int(shot[1:]) - 1
+    return x, y
 
 
    def place_ships():
