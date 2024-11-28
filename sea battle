@@ -82,6 +82,24 @@ def play_game():
             print("You already shot here! Try again.")
             input("Press Enter to continue...")
             continue
+ # Process the shot
+        shots += 1
+        if hidden_field[x][y] == "S":
+            player_field[x][y] = "H"
+            hidden_field[x][y] = "X"
+            hits += 1
+            print("Hit!")
+        else:
+            player_field[x][y] = "M"
+            print("Miss!")
 
+        input("Press Enter to continue...")
+
+    # Game over
+    clear_screen()
+    print(f"Congratulations, {player_name}! You sank all the ships in {shots} shots.")
+
+# Run the game
+play_game()
 
 
